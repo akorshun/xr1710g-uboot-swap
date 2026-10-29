@@ -41,8 +41,10 @@ jobs:
         run: python3 tests/check_slot.py firmware/xr1710g-chainloader-slot.bin
       - name: Установить capstone
         run: pip install --quiet capstone
-      - name: Проверить модуль mtd-rw
-        run: python3 tests/check_module.py firmware/mtd-rw-6.18.41.ko "6.18.41 SMP mod_unload aarch64"
+      - name: Проверить модули mtd-rw
+        run: |
+          python3 tests/check_module.py firmware/mtd-rw-6.18.41.ko "6.18.41 SMP mod_unload aarch64"
+          python3 tests/check_module.py firmware/mtd-rw-6.18.55.ko "6.18.55 SMP mod_unload aarch64"
       - name: Проверить контрольные суммы
         run: cd firmware && sha256sum -c SHA256SUMS
 
@@ -72,6 +74,16 @@ jobs:
           curl -fsSL -o /tmp/upstream.bin "$url"
           local_sum=$(sha256sum firmware/xr1710g-chainloader-slot.bin | awk '{ print $1 }')
           upstream_sum=$(sha256sum /tmp/upstream.bin | awk '{ print $1 }')
+          echo "в репозитории: $local_sum"
+          echo "в релизе:      $upstream_sum"
+          test "$local_sum" = "$upstream_sum"
+      - name: Сверить загрузчик OpenWrt с релизом akorshun/openwrt
+        run: |
+          name=openwrt-airoha-an7581-gemtek_xr1710g-ubi-chainload-uboot.itb
+          url=https://github.com/akorshun/openwrt/releases/download/xr1710g-r7/$name
+          curl -fsSL -o /tmp/openwrt.itb "$url"
+          local_sum=$(sha256sum "firmware/$name" | awk '{ print $1 }')
+          upstream_sum=$(sha256sum /tmp/openwrt.itb | awk '{ print $1 }')
           echo "в репозитории: $local_sum"
           echo "в релизе:      $upstream_sum"
           test "$local_sum" = "$upstream_sum"
