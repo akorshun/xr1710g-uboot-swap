@@ -149,7 +149,8 @@ The address is always `http://192.168.255.1`, DHCP gives the PC
 
 The repository scripts upload images into it from a PC — they find or
 download the image, check sha256 and the header, wait for recovery and show
-progress (their messages are in Russian):
+progress. Like `flash.sh`, they speak English or Russian (`upload.sh -L en|ru`,
+`upload.ps1 -Lang en|ru`, `$XR1710G_LANG`, or a question at start-up):
 
 ```bash
 sh upload.sh                     # the http-uboot bootloader, target uboot
@@ -210,7 +211,7 @@ boot, recovery from flash, installer via TFTP.
 | `firmware/openwrt-airoha-an7581-gemtek_xr1710g-ubi-chainload-uboot.itb` | OpenWrt chainloader from release `xr1710g-r7` |
 | `firmware/mtd-rw-6.18.41.ko` | MTD unlock module for 6.18.41 kernels |
 | `firmware/mtd-rw-6.18.55.ko` | MTD unlock module for 6.18.55 kernels |
-| `tests/run.sh` | 134 checks on a fake router and a mock recovery |
+| `tests/run.sh` | 138 checks on a fake router and a mock recovery |
 | `tests/check_slot.py` | http-uboot slot image: magic, CRC, FIT, recovery present |
 | `tests/check_module.py` | module: ELF, vermagic, symbols, structure accesses |
 
@@ -264,7 +265,7 @@ load it on a mismatch.
   `xr1710g-r7` was written from Linux the same way (`mtd-rw` 6.18.55) and its
   reset → TFTP recovery verified on hardware; the `-u openwrt` path of this
   script itself has so far been tested in CI only.
-* **In CI**: 134 checks on a fake router (faked `/proc/mtd`,
+* **In CI**: 138 checks on a fake router (faked `/proc/mtd`,
   `/sys/class/mtd`, `/sys/class/ubi`, slot dump, `mtd`, `insmod`,
   `fw_printenv`/`fw_setenv`, `ubiupdatevol`, `reboot`) and on a mock recovery,
   under `dash`, `busybox sh` and `bash`, in both languages; plus shellcheck,

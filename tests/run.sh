@@ -672,6 +672,8 @@ if ! command -v curl >/dev/null 2>&1 || ! command -v "$PYTHON" >/dev/null 2>&1; 
 	printf '\nПропускаю тесты upload.sh: нет curl или %s\n' "$PYTHON"
 else
 	printf '\n=== upload.sh (%s) ===\n' "$SH"
+	XR1710G_LANG=ru
+	export XR1710G_LANG
 
 	start_mock() {
 		rm -f "$TMP/port" "$TMP/received.bin" "$TMP/queries"
@@ -712,6 +714,17 @@ else
 			"$(sha256sum "$TMP/received.bin" | awk '{ print $1 }')" "$image_sum"
 		stop_mock
 	fi
+
+	# 29b. То же по-английски
+	if start_mock --flavor wiro; then
+		XR1710G_LANG=en $SH "$UPLOAD" -i "127.0.0.1:$PORT" -y -w 20 > "$TMP/u1en.txt" 2>&1 || true
+		has "upload en: проверил sha256" "matches xr1710g_260805" "$TMP/u1en.txt"
+		has "upload en: образ принят" "The recovery accepted the image" "$TMP/u1en.txt"
+		hasnt "upload en: без кириллицы" "Образ" "$TMP/u1en.txt"
+		stop_mock
+	fi
+	XR1710G_LANG="" $SH "$UPLOAD" -L en -t firmware -y -w 5 > "$TMP/u5en.txt" 2>&1 || true
+	has "upload -L en: ошибка по-английски" "ERROR: for the firmware target pass the image with -f" "$TMP/u5en.txt"
 
 	# 30. Рекавери без ui_build (сборка YYH2913)
 	if start_mock --flavor new; then

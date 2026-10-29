@@ -143,7 +143,9 @@ sh /tmp/flash.sh -r /root/xr1710g-chainloader-<дата>.bin
 
 Залить в него что-нибудь с ПК можно скриптами из репозитория — они сами найдут
 или скачают образ, проверят sha256 и заголовок, дождутся рекавери и покажут
-прогресс:
+прогресс. Как и `flash.sh`, они говорят по-английски или по-русски
+(`upload.sh -L en|ru`, `upload.ps1 -Lang en|ru`, `$XR1710G_LANG` или вопрос при
+запуске):
 
 ```bash
 sh upload.sh                     # загрузчик http-uboot, цель uboot
@@ -202,7 +204,7 @@ chainloader OpenWrt). Чтобы перейти на загрузчик OpenWrt,
 | `firmware/openwrt-airoha-an7581-gemtek_xr1710g-ubi-chainload-uboot.itb` | chainloader OpenWrt из релиза `xr1710g-r7` |
 | `firmware/mtd-rw-6.18.41.ko` | модуль снятия защиты MTD для ядер 6.18.41 |
 | `firmware/mtd-rw-6.18.55.ko` | модуль снятия защиты MTD для ядер 6.18.55 |
-| `tests/run.sh` | 134 проверки на фальшивом роутере и мок-рекавери |
+| `tests/run.sh` | 138 проверок на фальшивом роутере и мок-рекавери |
 | `tests/check_slot.py` | образ слота http-uboot: magic, CRC, FIT, наличие рекавери |
 | `tests/check_module.py` | модуль: ELF, vermagic, символы, обращения к структуре |
 
@@ -255,7 +257,7 @@ c4a456d7440ad89d52e27bd16bebd352e569fea6b68cb200589c82fe1218669b  mtd-rw-6.18.55
   `xr1710g-r7` записывался из Linux тем же способом (`mtd-rw` 6.18.55), его
   reset → recovery по TFTP проверен на железе; сам путь `-u openwrt` этого
   скрипта пока проверен только в CI.
-* **В CI**: 134 проверки на фальшивом роутере (подменённые `/proc/mtd`,
+* **В CI**: 138 проверок на фальшивом роутере (подменённые `/proc/mtd`,
   `/sys/class/mtd`, `/sys/class/ubi`, дамп слота, `mtd`, `insmod`,
   `fw_printenv`/`fw_setenv`, `ubiupdatevol`, `reboot`) и на мок-рекавери, под
   `dash`, `busybox sh` и `bash`, на обоих языках; отдельно shellcheck, разбор
