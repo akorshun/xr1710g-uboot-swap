@@ -20,7 +20,7 @@ Pick **http** if you want a browser-based recovery and flexible layouts; pick
 **openwrt** if you run OpenWrt and want the same bootloader the official
 image ships for this board.
 
-Tested on an XR1710G with iStoreOS `v1.4.0 r0+1-99598e539d` (kernel 6.18.41),
+Tested on hardware: an XR1710G with iStoreOS `v1.4.0 r0+1-99598e539d` (kernel 6.18.41),
 which came with a third-party `U-Boot 2026.07-xr1710g-wiro-recovery`, and with
 the OpenWrt `xr1710g-r*` builds (kernel 6.18.55).
 
@@ -261,10 +261,26 @@ load it on a mismatch.
   `mtd2` skipped as already writable), slot write, matching read-back sum,
   `bootcmd` fix, reboot. The system came up by itself with
   `U-Boot 2026.07-00766-g53b73174c0fc` in the slot, MACs and data intact,
-  partition protection back (`mtd1=0x0`). The OpenWrt chainloader from
-  `xr1710g-r7` was written from Linux the same way (`mtd-rw` 6.18.55) and its
-  reset → TFTP recovery verified on hardware; the `-u openwrt` path of this
-  script itself has so far been tested in CI only.
+  partition protection back (`mtd1=0x0`).
+* **Both directions with flash.sh 3.0** (2026-10-29, XR1710G on OpenWrt
+  `xr1710g-r7`, kernel 6.18.55, the bundled `mtd-rw-6.18.55.ko`, empty saved
+  environment):
+  * `-u http` over the OpenWrt bootloader: slot written and verified, reboot,
+    the vendor AXON bootloader starts the uImage shim, http-uboot boots
+    OpenWrt from the `fit` volume (`config-1`). Reset at power-on brings up the
+    web recovery: `Recovery button detected`, the PC gets `192.168.255.2` over
+    DHCP, `/about` reports layout 2.0, `/status` and the web page answer.
+    Without the button it boots OpenWrt again.
+  * `-u openwrt` back over http-uboot: slot written and verified, reboot,
+    AXON loads the FIT directly, `U-Boot 2026.07-OpenWrt-r0-e80747b` takes its
+    default environment (`bad CRC`), the reset check in `preboot` reads `off`,
+    the boot menu runs `boot_ubi` and OpenWrt comes up.
+
+  In both cases the slot matched the release sha256 after the reboot, the
+  protection was back (`mtd1=0x0`), the module unloaded, and WAN, LAN and
+  Wi-Fi came up with the factory MACs. Wiping an environment left by the other
+  bootloader has so far been tested in CI only: on this unit the saved
+  environment was empty each time.
 * **In CI**: 138 checks on a fake router (faked `/proc/mtd`,
   `/sys/class/mtd`, `/sys/class/ubi`, slot dump, `mtd`, `insmod`,
   `fw_printenv`/`fw_setenv`, `ubiupdatevol`, `reboot`) and on a mock recovery,
