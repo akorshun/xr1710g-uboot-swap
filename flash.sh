@@ -29,7 +29,7 @@
 set -eu
 
 SCRIPT_VERSION="3.0"
-REPO_RAW="https://raw.githubusercontent.com/akorshun/xr1710g-uboot-recovery/main"
+REPO_RAW="https://raw.githubusercontent.com/akorshun/xr1710g-uboot-swap/main"
 SLOT_NAME="chainloader"
 SLOT_SIZE=1048576
 RECOVERY_IP="192.168.255.1"

@@ -53,7 +53,7 @@ vermagic=6.18.41 SMP mod_unload aarch64
 ## Прошивка
 
 ```bash
-wget -O /tmp/flash.sh https://raw.githubusercontent.com/akorshun/xr1710g-uboot-recovery/main/flash.sh && sh /tmp/flash.sh
+wget -O /tmp/flash.sh https://raw.githubusercontent.com/akorshun/xr1710g-uboot-swap/main/flash.sh && sh /tmp/flash.sh
 ```
 
 Сначала скрипт спросит язык (English / Русский), затем — какой загрузчик

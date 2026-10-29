@@ -28,7 +28,7 @@ $ProgressPreference = "SilentlyContinue"
 $ScriptVersion = "1.1"
 $SlotImage = "xr1710g-chainloader-slot.bin"
 $SlotSha256 = "DEAEFED37C13F25EB551D60951CEC7077ADFD01C6964174D0AA938288D27BE30"
-$SlotUrl = "https://github.com/akorshun/xr1710g-uboot-recovery/raw/main/firmware/xr1710g-chainloader-slot.bin"
+$SlotUrl = "https://github.com/akorshun/xr1710g-uboot-swap/raw/main/firmware/xr1710g-chainloader-slot.bin"
 $SlotMax = 1048576
 
 # --- language ---------------------------------------------------------------

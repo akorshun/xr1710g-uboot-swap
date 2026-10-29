@@ -22,7 +22,7 @@ WAIT_SECONDS=180
 UI_LANG="${XR1710G_LANG:-}"
 SLOT_IMAGE="xr1710g-chainloader-slot.bin"
 SLOT_SHA256="deaefed37c13f25eb551d60951cec7077adfd01c6964174d0aa938288d27be30"
-SLOT_URL="https://github.com/akorshun/xr1710g-uboot-recovery/raw/main/firmware/xr1710g-chainloader-slot.bin"
+SLOT_URL="https://github.com/akorshun/xr1710g-uboot-swap/raw/main/firmware/xr1710g-chainloader-slot.bin"
 SLOT_MAX=1048576
 WORKDIR=""
 

@@ -54,7 +54,7 @@ line with the new bootloader, unloads the module and reboots.
 ## Flashing
 
 ```bash
-wget -O /tmp/flash.sh https://raw.githubusercontent.com/akorshun/xr1710g-uboot-recovery/main/flash.sh && sh /tmp/flash.sh
+wget -O /tmp/flash.sh https://raw.githubusercontent.com/akorshun/xr1710g-uboot-swap/main/flash.sh && sh /tmp/flash.sh
 ```
 
 The script first asks for the language (English / Русский) and then which
